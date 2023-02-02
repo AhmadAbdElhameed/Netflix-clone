@@ -1,7 +1,35 @@
 <?php
+
+    require_once('includes/classes/FormSanitizer.php');
+
     if(isset($_POST['submitButton'])){
-        echo "form was submitted";
+        $firstName = FormSanitizer::sanitizeFormString($_POST['firstName']);
+        $lastName = FormSanitizer::sanitizeFormString($_POST['lastName']);
+        $userName = FormSanitizer::sanitizeFormUsername($_POST['username']);
+        $email = FormSanitizer::sanitizeFormEmail($_POST['email']);
+        $confirm_email = FormSanitizer::sanitizeFormEmail($_POST['confirm_email']);
+        $password = FormSanitizer::sanitizeFormPassword($_POST['password']);
+        $confirm_password = FormSanitizer::sanitizeFormPassword($_POST['confirm_password']);
+
+
+        echo $firstName . "<br>";
+        echo $lastName . "<br>";
+        echo $userName . "<br>";
+        echo $email . "<br>";
+        echo $confirm_email . "<br>";
+        echo $password . "<br>";
+        echo $confirm_password . "<br>";
     }
+
+    function sanitizeFormString($inputText){
+        $inputText = strip_tags($inputText);
+        $inputText = str_replace(" ","",$inputText); // replace space with "" before text or after
+        //$inputText = trim(" ","",$inputText);
+        $inputText = strtolower($inputText);
+        $inputText = ucfirst($inputText);
+        return $inputText;
+    }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -24,7 +52,7 @@
             <form method="POST">
                 <input type="text" name='firstName' placeholder='First Name' required>
                 <input type="text" name='lastName' placeholder='Last Name' required>
-                <input type="text" name='userName' placeholder='User Name' required>
+                <input type="text" name='username' placeholder='Username' required>
                 <input type="email" name='email' placeholder='Email Address' required>
                 <input type="email" name='confirm_email' placeholder='Confirm Email Address' required>
                 <input type="password" name='password' placeholder='Password' required>
