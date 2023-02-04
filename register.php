@@ -16,11 +16,7 @@
         $password = FormSanitizer::sanitizeFormPassword($_POST['password']);
         $confirm_password = FormSanitizer::sanitizeFormPassword($_POST['confirm_password']);
 
-
-
-        $account->validateFirstName($firstName);
-
-
+        $account->register($firstName,$lastName,$userName,$email,$confirm_email,$password,$confirm_password );
 
         // echo $firstName . "<br>";
         // echo $lastName . "<br>";
@@ -62,10 +58,22 @@
             <form method="POST">
                 <?php echo $account->getError(Constants::$firstNameCharacters) ?>
                 <input type="text" name='firstName' placeholder='First Name' required>
+
+                <?php echo $account->getError(Constants::$lastNameCharacters) ?>
                 <input type="text" name='lastName' placeholder='Last Name' required>
+
+                <?php echo $account->getError(Constants::$usernameCharacters) ?>
+                <?php echo $account->getError(Constants::$usernameTaken) ?>
                 <input type="text" name='username' placeholder='Username' required>
+
+                <?php echo $account->getError(Constants::$emailsDonotMatch) ?>
+                <?php echo $account->getError(Constants::$emailInvalid) ?>
+                <?php echo $account->getError(Constants::$emailTaken) ?>
                 <input type="email" name='email' placeholder='Email Address' required>
                 <input type="email" name='confirm_email' placeholder='Confirm Email Address' required>
+
+                <?php echo $account->getError(Constants::$passwordsDonotMatch) ?>
+                <?php echo $account->getError(Constants::$passwordLength) ?>
                 <input type="password" name='password' placeholder='Password' required>
                 <input type="password" name='confirm_password' placeholder='Confirm Password' required>
                 <input type="submit" name='submitButton' value="SUBMIT">
