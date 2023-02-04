@@ -15,6 +15,27 @@
             $this->validateUsername($un);
             $this->validateEmails($em,$cem);
             $this->validatePasswords($pw,$cpw);
+
+            if(empty($this->errorArray)){
+                return $this->insertUserDetails($fn,$ln,$un,$em,$pw);
+            }
+
+            return false;
+        }
+
+        public function insertUserDetails($fn,$ln,$un,$em,$pw){
+            //$pw = hash("ahm123",$pw);
+
+            $query = $this->con->prepare("INSERT INTO users (firstName,lastName,username,email,password)
+                                        VALUES(:fn,:ln,:un,:em,:pw)");
+            $query->bindValue(":fn",$fn);
+            $query->bindValue(":ln",$ln);
+            $query->bindValue(":un",$un);
+            $query->bindValue(":em",$em);
+            $query->bindValue(":pw",$pw);
+
+            return $query->execute();
+        
         }
 
 
@@ -55,7 +76,7 @@
 
             }
 
-            $query = $this->con->prepare("SELECT * FROM emails WHERE email=:em");
+            $query = $this->con->prepare("SELECT * FROM users WHERE email=:em");
             $query->bindValue(":em",$em);
             $query->execute();
 
@@ -71,7 +92,7 @@
                 array_push($this->errorArray, Constants::$passwordsDonotMatch);
                 return;
             }
-            if(strlen($un) < 5 || strlen($un) > 25 ){
+            if(strlen($pw) < 5 || strlen($pw) > 25 ){
                 array_push($this->errorArray, Constants::$passwordLength);
                 return;
             }
@@ -80,7 +101,7 @@
         public function getError($error){
 
             if(in_array($error,$this->errorArray)){
-                return $error;
+                return "<span class='errorMessage'>$error</span>";
             }
             
         }
