@@ -1,6 +1,11 @@
 <?php
 
     require_once('includes/classes/FormSanitizer.php');
+    require_once('includes/classes/Account.php');
+    require_once('includes/classes/Constants.php');
+    require_once('includes/config.php');
+
+    $account = new Account($con);
 
     if(isset($_POST['submitButton'])){
         $firstName = FormSanitizer::sanitizeFormString($_POST['firstName']);
@@ -11,14 +16,20 @@
         $password = FormSanitizer::sanitizeFormPassword($_POST['password']);
         $confirm_password = FormSanitizer::sanitizeFormPassword($_POST['confirm_password']);
 
+        $success = $account->register($firstName,$lastName,$userName,$email,$confirm_email,$password,$confirm_password );
 
-        echo $firstName . "<br>";
-        echo $lastName . "<br>";
-        echo $userName . "<br>";
-        echo $email . "<br>";
-        echo $confirm_email . "<br>";
-        echo $password . "<br>";
-        echo $confirm_password . "<br>";
+        if($success){
+            $_SESSION['userLoggedIn'] = $username;
+            header("Location: index.php");
+        }
+
+        // echo $firstName . "<br>";
+        // echo $lastName . "<br>";
+        // echo $userName . "<br>";
+        // echo $email . "<br>";
+        // echo $confirm_email . "<br>";
+        // echo $password . "<br>";
+        // echo $confirm_password . "<br>";
     }
 
     function sanitizeFormString($inputText){
@@ -28,6 +39,12 @@
         $inputText = strtolower($inputText);
         $inputText = ucfirst($inputText);
         return $inputText;
+    }
+
+    function getInputValue($value){
+        if(isset($_POST[$value])){
+            echo $_POST[$value];
+        }
     }
 
 ?>
@@ -50,11 +67,24 @@
                 
             </div>
             <form method="POST">
-                <input type="text" name='firstName' placeholder='First Name' required>
-                <input type="text" name='lastName' placeholder='Last Name' required>
-                <input type="text" name='username' placeholder='Username' required>
-                <input type="email" name='email' placeholder='Email Address' required>
-                <input type="email" name='confirm_email' placeholder='Confirm Email Address' required>
+                <?php echo $account->getError(Constants::$firstNameCharacters) ?>
+                <input type="text" name='firstName' value="<?php getInputValue('firstName') ?>" placeholder='First Name' required>
+
+                <?php echo $account->getError(Constants::$lastNameCharacters) ?>
+                <input type="text" name='lastName' value="<?php getInputValue('lastName') ?>" placeholder='Last Name' required>
+
+                <?php echo $account->getError(Constants::$usernameCharacters) ?>
+                <?php echo $account->getError(Constants::$usernameTaken) ?>
+                <input type="text" name='username' value="<?php getInputValue('username') ?>" placeholder='Username' required>
+
+                <?php echo $account->getError(Constants::$emailsDonotMatch) ?>
+                <?php echo $account->getError(Constants::$emailInvalid) ?>
+                <?php echo $account->getError(Constants::$emailTaken) ?>
+                <input type="email" name='email' value="<?php getInputValue('email') ?>" placeholder='Email Address' required>
+                <input type="email" name='confirm_email' value="<?php getInputValue('confirm_email') ?>"  placeholder='Confirm Email Address' required>
+
+                <?php echo $account->getError(Constants::$passwordsDonotMatch) ?>
+                <?php echo $account->getError(Constants::$passwordLength) ?>
                 <input type="password" name='password' placeholder='Password' required>
                 <input type="password" name='confirm_password' placeholder='Confirm Password' required>
                 <input type="submit" name='submitButton' value="SUBMIT">
