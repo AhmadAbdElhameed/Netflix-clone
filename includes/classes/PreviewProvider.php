@@ -10,8 +10,29 @@
             $this->username = $username;
         }
 
-        public function createPreviewVideo(){
-            echo "hello";
+        public function createPreviewVideo($entity){
+            if ($entity == null) {
+                $entity = $this->getRandomEntity();
+            }
+            $id = $entity->getId();
+            $name = $entity->getName();
+            $preview = $entity->getPreview();
+            $thumbnail = $entity->getThumbnail();
+            return "<div class='previewContainer'>
+                    <img src='$thumbnail' class='previewImage' hidden>
+                    <video autoplay muted class='previewVideo'>
+                        <source src='$preview' type='video/mp4'>
+                    </video>
+                    </div>";
+        }
+
+        public function getRandomEntity(){
+            $query = $this->con->prepare("SELECT * FROM entities ORDER BY RAND() LIMIT 1");
+            $query->execute();
+            // get the data and store it in associtive array
+            $row = $query->fetch(PDO::FETCH_ASSOC);
+
+            return new Entity($this->con,$row);
         }
     }
 

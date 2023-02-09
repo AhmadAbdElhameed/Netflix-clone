@@ -3,6 +3,7 @@
 
 <?php
     require_once("includes/classes/PreviewProvider.php");
+    require_once("includes/classes/Entity.php");
     require_once('includes/config.php');
 
     if(!isset($_SESSION['userLoggedIn'])){
@@ -12,6 +13,6 @@
     $userLoggedIn = $_SESSION['userLoggedIn'];
 
     $preview = new PreviewProvider($con,$userLoggedIn);
-    echo $preview->createPreviewVideo();
+    echo $preview->createPreviewVideo(null);
 
 ?>
