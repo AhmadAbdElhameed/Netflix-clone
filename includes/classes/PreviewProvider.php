@@ -38,6 +38,18 @@
                     </div>";
         }
 
+        public function createEntityPreviewSquare($entity){
+            $id = $entity->getId();
+            $name = $entity->getName();
+            $thumbnail = $entity->getThumbnail();
+
+            return "<a href='entity.php?id=$id'>
+                        <div class= 'previewContainer small'>
+                            <img src='$thumbnail' title='$name'>
+                        </div>
+                    </a>";
+        }
+
         public function getRandomEntity(){
             // $query = $this->con->prepare("SELECT * FROM entities ORDER BY RAND() LIMIT 1");
             // $query->execute();
@@ -49,7 +61,7 @@
             $entity = EntityProvider::getEntities($this->con , null , 1);
             return $entity[0];
 
-            
+
         }
     }
 
