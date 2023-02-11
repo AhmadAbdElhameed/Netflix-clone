@@ -48,7 +48,15 @@
             foreach($entities as $entity){
                 $entitiesHTML .= $previewProvider->createEntityPreviewSquare($entity);
             }
-            return $entitiesHTML . "<br>";
+            return "<div class='category'>
+                        <a href='category.php?id=$categoryId'>
+                            <h3>$title</h3>
+                        </a>
+
+                        <div class='entities scrollbars_none'>
+                            $entitiesHTML
+                        </div>
+                    </div>";
         }
 
     }
