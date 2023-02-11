@@ -99,3 +99,35 @@ html,body{
     font-weight: 400;
     text-align: center;
 }
+
+.previewContainer{
+    position: relative;
+    display: flex;
+}
+
+.previewVideo,
+.previewImage{
+    width: 100%;
+}
+
+.videoOverlay{
+
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.3);
+    position: absolute;
+}
+
+.mainDetails{
+    position: relative;
+    top: 35%;
+    margin-left: 50px;
+    display: flex;
+    flex-direction: column;
+    
+}
+.videoOverlay .mainDetails h3 {
+    color: #fff;
+    font-size: 40px;
+    margin: 15px 0;
+}

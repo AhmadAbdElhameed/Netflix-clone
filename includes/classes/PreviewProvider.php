@@ -19,10 +19,17 @@
             $preview = $entity->getPreview();
             $thumbnail = $entity->getThumbnail();
             return "<div class='previewContainer'>
-                    <img src='$thumbnail' class='previewImage' hidden>
-                    <video autoplay muted class='previewVideo'>
-                        <source src='$preview' type='video/mp4'>
-                    </video>
+                        <img src='$thumbnail' class='previewImage' hidden>
+                        <video autoplay muted class='previewVideo'>
+                            <source src='$preview' type='video/mp4'>
+                        </video>
+                        <div class='videoOverlay'>
+                            <div class='mainDetails'>
+                                <h3>
+                                    $name
+                                </h3>
+                            </div>
+                        </div>
                     </div>";
         }
 
