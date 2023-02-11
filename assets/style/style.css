@@ -8,7 +8,21 @@ html,body{
     font-family: Arial, Helvetica, sans-serif;
     box-sizing: border-box;
 }
+h3 {
+    color: #cfcece;
+}
 
+a h3:hover{
+    color: rgb(255, 255, 255);
+}
+a {
+    text-decoration: none;
+}
+.wrapper{
+    background-color: #141414;
+    min-width: 1050px;
+    min-height: 100%;
+}
 
 .signInContainer{
     background-color: #efefee;
@@ -98,4 +112,87 @@ html,body{
     font-size: 14px;
     font-weight: 400;
     text-align: center;
+}
+
+.previewContainer{
+    position: relative;
+    display: flex;
+}
+
+.previewContainer.small{
+    display: inline-flex;
+    width: 230px;
+    height: 130px;
+    margin-right: 4px;
+}
+.previewContainer.small img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.previewVideo,
+.previewImage{
+    width: 100%;
+}
+
+.videoOverlay{
+
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.3);
+    position: absolute;
+}
+
+.mainDetails{
+    position: relative;
+    top: 35%;
+    margin-left: 50px;
+    display: flex;
+    flex-direction: column;
+
+}
+.videoOverlay .mainDetails h3 {
+    color: #fff;
+    font-size: 40px;
+    margin: 15px 0;
+}
+.mainDetails button{
+    background-color: rgba(51,51,51,0.4);
+    color: #fff;
+    border: none;
+    min-width: 150px;
+    padding: 0 38px;
+    height: 50px;
+    max-height: 50px;
+    font-size: 18px;
+    border-radius: 2px;
+    margin-bottom: 15px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+
+.mainDetails button:hover{
+
+    background-color: #e6e6e6;
+    color: #000;
+}
+
+
+.category{
+    display: flex;
+    flex-direction: column;
+    padding: 10px 0;
+}
+
+.entities{
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+
+}
+
+.scrollbars_none::-webkit-scrollbar{
+    display: none;
 }
