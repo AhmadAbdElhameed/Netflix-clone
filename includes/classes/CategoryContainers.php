@@ -29,7 +29,26 @@
             $categoryId = $sqlData['id'];
             $title = $title == null ? $sqlData['name'] : $title;
 
-            return $title . "<br>";
+            if($tvShows && $movies){
+                $entities = EntityProvider::getEntities($this->con , $categoryId , 30);
+            }
+            else if($tvShows){
+                // Get tv show entities
+            }
+            else{
+                // Get tv movie entities
+            }
+
+            if (sizeof($entities) == 0){
+                return;
+            }
+
+            $entitiesHTML = "";
+
+            foreach($entities as $entity){
+                $entitiesHTML .= $entity->getName();
+            }
+            return $entitiesHTML . "<br>";
         }
 
     }
