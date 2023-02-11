@@ -1,6 +1,3 @@
-<h1>Index Page</h1>
-
-
 <?php
 
     require_once('includes/header.php');

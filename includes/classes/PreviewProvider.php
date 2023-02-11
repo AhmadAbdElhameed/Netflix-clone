@@ -28,6 +28,11 @@
                                 <h3>
                                     $name
                                 </h3>
+
+                                <div>
+                                    <button><i class='fa-solid fa-play'></i> Play</button>
+                                    <button onclick='volumeToggle(this)'><i class='fa-solid fa-volume-xmark'></i></button>
+                                </div>
                             </div>
                         </div>
                     </div>";
