@@ -196,3 +196,16 @@ a {
 .scrollbars_none::-webkit-scrollbar{
     display: none;
 }
+
+.previewCategories{
+    padding: 0px 50px;
+}
+
+.errorBanner{
+        color: #fff;
+        position: absolute;
+        top: 25%;
+        text-align: center;
+        width: 100%;
+        font-size: 20px;
+}

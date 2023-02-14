@@ -10,7 +10,7 @@
             if(is_array($input)){
                 $this->sqlData = $input;
             }else{
-                $query = $this->prepare("SELECT * FROM entitis WHERE id=id");
+                $query = $this->con->prepare("SELECT * FROM entities WHERE id=:id");
                 $query->bindValue(":id",$input);
                 $query->execute();
 
