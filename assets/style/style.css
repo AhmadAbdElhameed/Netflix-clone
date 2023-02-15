@@ -252,4 +252,6 @@ a {
 }
 
 
-
+.previewCategories .noScroll .category .entities{
+    white-space: normal;
+}
