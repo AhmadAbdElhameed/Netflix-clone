@@ -18,6 +18,9 @@
             $name = $entity->getName();
             $preview = $entity->getPreview();
             $thumbnail = $entity->getThumbnail();
+
+            $videoId = VideoProvider::getEntityVideoForUser($this->con , $id,$this->username);
+
             return "<div class='previewContainer'>
                         <img src='$thumbnail' class='previewImage' hidden>
                         <video autoplay muted class='previewVideo' onended='previewEnded()'>
@@ -30,7 +33,7 @@
                                 </h3>
 
                                 <div>
-                                    <button><i class='fa-solid fa-play'></i> Play</button>
+                                    <button onclick='watchVideo($videoId)'><i class='fa-solid fa-play'></i> Play</button>
                                     <button onclick='volumeToggle(this)'><i class='fa-solid fa-volume-xmark'></i></button>
                                 </div>
                             </div>
