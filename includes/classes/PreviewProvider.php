@@ -10,6 +10,16 @@
             $this->username = $username;
         }
 
+        public function createCategoryPreviewVideo($categoryId){
+            $entitiesArray = EntityProvider::getEntities($this->con, $categoryId , 1);
+
+            if(sizeof($entitiesArray) == 0){
+                ErrorMessage::show("No TV shows to display");
+            }
+
+            return $this->createPreviewVideo($entitiesArray[0]);
+        }
+
         public function createTVshowPreviewVideo(){
             $entitiesArray = EntityProvider::getTVShowEntities($this->con, null , 1);
 
