@@ -4,6 +4,7 @@
     require_once("includes/classes/FormSanitizer.php");
     require_once("includes/classes/Constants.php");
     $detailsMessage = "";
+    $passwordMessage = "";
 
     if(isset($_POST["saveDetailsButton"])){
         $account = new Account($con);
@@ -19,9 +20,29 @@
                                 </div>";
         }else{
             // Failure
-            echo "failed";
             $errorMessage = $account->getFirstError();
             $detailsMessage = "<div class='alertError'>
+                                    $errorMessage
+                                </div>";
+        }
+    }
+    if(isset($_POST["savePasswordButton"])){
+        $account = new Account($con);
+
+        $oldPassword = FormSanitizer::sanitizeFormPassword($_POST["oldPassword"]);
+        $newPassword = FormSanitizer::sanitizeFormPassword($_POST["newPassword"]);
+        $newPassword2 = FormSanitizer::sanitizeFormPassword($_POST["newPassword2"]);
+
+    
+        if($account->updatePassword($oldPassword , $newPassword , $newPassword2 , $userLoggedIn)){
+            //success
+            $passwordMessage = "<div class='alertSuccess'>
+                                    Password updated successfully!
+                                </div>";
+        }else{
+            // Failure
+            $errorMessage = $account->getFirstError();
+            $passwordMessage = "<div class='alertError'>
                                     $errorMessage
                                 </div>";
         }
@@ -40,8 +61,7 @@
                 $user = new User($con,$userLoggedIn);
                 $firstName = isset($_POST["firstName"]) ? $_POST["firstName"] : $user->getFirstName();
                 $lastName = isset($_POST["lastName"]) ? $_POST["lastName"] : $user->getLastName();
-                $username = isset($_POST["username"]) ? $_POST["username"] : $user->getUsername();
-                $email = isset($_POST["username"]) ? $_POST["username"] : $user->getEmail();
+                $email = isset($_POST["email"]) ? $_POST["email"] : $user->getEmail();
                 //echo $firstName , $lastName , $username;
                 
             ?>
@@ -62,7 +82,9 @@
             <input type="password" name="oldPassword" placeholder="Old Password">
             <input type="password" name="newPassword" placeholder="New Password">
             <input type="password" name="newPassword2" placeholder="Confirm New Password">
-
+            <div class="message">
+                <?php echo $passwordMessage; ?>
+            </div>
             <input type="submit" name="savePasswordButton" value="Update">
         </form>
     </div>
