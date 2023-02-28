@@ -11,17 +11,17 @@ use PayPal\Common\PayPalModel;
 
 // Create a new billing plan
 $plan = new Plan();
-$plan->setName('Netflix monthly subscription')
-    ->setDescription('Gets you all the features of our site.')
-    ->setType('INFINITE');
+$plan->setName('Reecflix monthly subscription')
+  ->setDescription('Gets you all the features of our site.')
+  ->setType('INFINITE');
 
 // Set billing plan definitions
 $paymentDefinition = new PaymentDefinition();
 $paymentDefinition->setName('Regular Payments')
-    ->setType('REGULAR')
-    ->setFrequency('Month')
-    ->setFrequencyInterval('1')
-    ->setAmount(new Currency(array('value' => 1.1, 'currency' => 'USD')));
+  ->setType('REGULAR')
+  ->setFrequency('Month')
+  ->setFrequencyInterval('1')
+  ->setAmount(new Currency(array('value' => 9.99, 'currency' => 'GBP')));
 
 $currentUrl = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 $returnUrl = str_replace("billing.php", "profile.php", $currentUrl);
@@ -29,11 +29,11 @@ $returnUrl = str_replace("billing.php", "profile.php", $currentUrl);
 // Set merchant preferences
 $merchantPreferences = new MerchantPreferences();
 $merchantPreferences->setReturnUrl($returnUrl . "?success=true")
-    ->setCancelUrl($returnUrl . "?success=false")
-    ->setAutoBillAmount('yes')
-    ->setInitialFailAmountAction('CONTINUE')
-    ->setMaxFailAttempts('0');
-    //->setSetupFee(new Currency(array('value' => 1.1, 'currency' => 'USD')));
+  ->setCancelUrl($returnUrl . "?success=false")
+  ->setAutoBillAmount('yes')
+  ->setInitialFailAmountAction('CONTINUE')
+  ->setMaxFailAttempts('0')
+  ->setSetupFee(new Currency(array('value' => 9.99, 'currency' => 'GBP')));
 
 $plan->setPaymentDefinitions(array($paymentDefinition));
 $plan->setMerchantPreferences($merchantPreferences);
