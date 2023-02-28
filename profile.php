@@ -4,6 +4,7 @@ require_once("includes/paypalConfig.php");
 require_once("includes/classes/Account.php");
 require_once("includes/classes/FormSanitizer.php");
 require_once("includes/classes/Constants.php");
+require_once("includes/classes/BillingDetails.php");
 
 $detailsMessage = "";
 $passwordMessage = "";
@@ -53,26 +54,27 @@ if(isset($_POST["savePasswordButton"])) {
 if (isset($_GET['success']) && $_GET['success'] == 'true') {
     $token = $_GET['token'];
     $agreement = new \PayPal\Api\Agreement();
-  
+
     try {
       // Execute agreement
-      $agreement->execute($token, $apiContext);
+        $agreement->execute($token, $apiContext);
+
+        $result = BillingDetails::insertDetails($con,$agreement,$token,$userLoggedIn);
 
       // Update user's account status
 
     } catch (PayPal\Exception\PayPalConnectionException $ex) {
-      echo $ex->getCode();
-      echo $ex->getData();
-      die($ex);
+        echo $ex->getCode();
+        echo $ex->getData();
+        die($ex);
     } catch (Exception $ex) {
-      die($ex);
+        die($ex);
     }
-  } 
-  else if (isset($_GET['success']) && $_GET['success'] == 'false') {
+} else if (isset($_GET['success']) && $_GET['success'] == 'false') {
     $subcriptionMessage = "<div class='alertError'>
                             User cancelled or something went wrong!
                         </div>";
-  }
+}
 
 ?>
 
